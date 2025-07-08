@@ -8,6 +8,7 @@ function App() {
   const [topics, setTopics] = useState([]);
   const [selectedTopic, setSelectedTopic] = useState(null);
   const [sentence, setSentence] = useState("");
+  const [choices, setChoices] = useState([]);
   const [answer, setAnswer] = useState("");
   const [hint, setHint] = useState("");
   const [userAnswer, setUserAnswer] = useState("");
@@ -34,9 +35,11 @@ function App() {
   const fetchQuestion = async (topic_id) => {
     setSentence("Loading...");
     setHint("");
+    setChoices([]);
     setShowHint(false);
     const res = await axios.post(`${API_URL}/get_question`, { topic_id });
     setSentence(res.data.sentence);
+    setChoices(res.data.choices.split(", "));
     setAnswer(res.data.answer);
     setHint(res.data.hint);
     setUserAnswer("");
@@ -47,7 +50,9 @@ function App() {
     const res = await axios.post(`${API_URL}/submit_answer`, {
       topic_id: selectedTopic.id,
       sentence,
+      choices: choices.join(", "),
       answer,
+      hint,
       user_answer: userAnswer,
     });
     setAttempted((a) => a + 1);
@@ -83,6 +88,11 @@ function App() {
         <h3>Topic: {selectedTopic.name}</h3>
         <div style={{marginBottom: 16}}>Score: {score} / {attempted}</div>
         <div style={{fontSize: 20, marginBottom: 16}}>{sentence}</div>
+        <ul>
+          {choices.map((c, i) => (
+            <li key={i}>{c}</li>
+          ))}
+        </ul>
         <input
           value={userAnswer}
           onChange={e => setUserAnswer(e.target.value)}

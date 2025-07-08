@@ -15,7 +15,9 @@ def init_db():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             topic_id INTEGER,
             sentence TEXT,
+            choices TEXT,
             answer TEXT,
+            hint TEXT,
             user_answer TEXT,
             correct INTEGER,
             timestamp DATETIME DEFAULT CURRENT_TIMESTAMP

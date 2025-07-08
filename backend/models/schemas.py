@@ -6,5 +6,7 @@ class TopicChoice(BaseModel):
 class AnswerRequest(BaseModel):
     topic_id: int
     sentence: str
+    choices: str
     answer: str
+    hint: str
     user_answer: str

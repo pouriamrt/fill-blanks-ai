@@ -30,16 +30,16 @@ def get_question(choice: TopicChoice):
     row = conn.execute("SELECT name FROM topics WHERE id = ?", (choice.topic_id,)).fetchone()
     if not row:
         return {"error": "Invalid topic"}
-    sentence, answer, hint = generate_question(row["name"])
-    return {"sentence": sentence, "answer": answer, "hint": hint}
+    sentence, choices, answer, hint = generate_question(row["name"])
+    return {"sentence": sentence, "choices": choices, "answer": answer, "hint": hint}
 
 @app.post("/submit_answer")
 def submit_answer(req: AnswerRequest):
     correct = int(req.user_answer.strip().lower() == req.answer.strip().lower())
     conn = get_conn()
     conn.execute(
-        "INSERT INTO game_history (topic_id, sentence, answer, user_answer, correct) VALUES (?, ?, ?, ?, ?)",
-        (req.topic_id, req.sentence, req.answer, req.user_answer, correct)
+        "INSERT INTO game_history (topic_id, sentence, choices, answer, hint, user_answer, correct) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        (req.topic_id, req.sentence, req.choices, req.answer, req.hint, req.user_answer, correct)
     )
     conn.commit()
     return {"correct": bool(correct)}
