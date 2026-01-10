@@ -6,7 +6,7 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 def generate_question(topic_name: str):
     prompt = ChatPromptTemplate.from_template("""
-    Write a single, interesting {topic} sentence. Hide one key word with ____.
+    Write a single, interesting {topic} sentence. Hide one key word with ____. Make it different from the previous questions.
     Then provide the answer with four choices (separated by comma with a space) and a short hint. Format:
     Sentence: ...
     Choices: ...
