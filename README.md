@@ -281,4 +281,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 **Pouria Mortezaagha**
 
-Copyright (c) 2025 Pouria Mortezaagha
+Copyright (c) 2026 Pouria Mortezaagha
